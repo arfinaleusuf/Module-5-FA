@@ -14,7 +14,7 @@ class Student(BaseModel):
     Math_marks: Annotated[int, Field(...,gt=0, lt=101)]
     English_marks: Annotated[int, Field(...,gt=0, lt=101)]
     Science_marks: Annotated[int, Field(...,gt=0, lt=101)]
-    Phone: Annotated[int, Field(...,examples="01700000000")]
+    Phone: Annotated[int, Field(...,example="01700000000")]
 
 @app.get("/")
 def hello():
@@ -73,10 +73,8 @@ def view_sorted_students(sorted_by: str = Query(...,description="sort on the bas
 def create_student(student: Student):
 
     data = load_data()
-    student_id = student["id"]
 
-    data[student_id] = student
-    del data[student_id]["id"]
+    data[student.id] = student.model_dump(exclude=["id"])
 
     save_data(data)
 
