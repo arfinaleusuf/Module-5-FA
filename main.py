@@ -1,7 +1,20 @@
 from fastapi import FastAPI, Path, HTTPException, Query, Body
+from pydantic import BaseModel, Field
+from typing import Annotated
 import json
 
 app = FastAPI()
+
+class Student(BaseModel):
+    id : Annotated[str,Field(...,description="Student id of the student", example="S001")]
+    name : str
+    age : int
+    Student_class : int
+    roll: int 
+    Math_marks: int
+    English_marks: int
+    Science_marks: int
+    Phone: str 
 
 @app.get("/")
 def hello():
@@ -36,8 +49,8 @@ def view_students_by_id(student_id: str = Path(...,description="Student id of th
     
 
 @app.get("/sort")
-def view_sorted_students(sorted_by: str = Query(...,description="sort on the basis of class, age, roll, marks", example=""), order: str = Query('asc', description='choose order: asc or desc')):
-    valid_fields = ["age", "class", "roll", "Math marks", "English marks", "Science marks",]
+def view_sorted_students(sorted_by: str = Query(...,description="sort on the basis of Student_class, age, roll, marks", example=""), order: str = Query('asc', description='choose order: asc or desc')):
+    valid_fields = ["age", "Student_class", "roll", "Math marks", "English marks", "Science marks",]
 
     if sorted_by not in valid_fields:
         raise HTTPException(status_code=404, detail=f'Invalid fields, select from{valid_fields}')
@@ -68,5 +81,3 @@ def create_student(student: dict = Body()):
     save_data(data)
 
     return "Successfully student created"
-
-    
