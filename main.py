@@ -8,13 +8,13 @@ app = FastAPI()
 class Student(BaseModel):
     id : Annotated[str,Field(...,description="Student id of the student", example="S001")]
     name : str
-    age : int
-    Student_class : int
-    roll: int 
-    Math_marks: int
-    English_marks: int
-    Science_marks: int
-    Phone: str 
+    age : Annotated[int, Field(...,gt=0, lt=100 ,description="Student age of the student", example="12")]
+    Student_class : Annotated[int, Field(...,gt=0, lt=13)]
+    roll: Annotated[int, Field(...,gt=0, lt=101)]
+    Math_marks: Annotated[int, Field(...,gt=0, lt=101)]
+    English_marks: Annotated[int, Field(...,gt=0, lt=101)]
+    Science_marks: Annotated[int, Field(...,gt=0, lt=101)]
+    Phone: Annotated[int, Field(...,examples="01700000000")]
 
 @app.get("/")
 def hello():
@@ -70,7 +70,7 @@ def view_sorted_students(sorted_by: str = Query(...,description="sort on the bas
         return sorted_data
 
 @app.post("/create")
-def create_student(student: dict = Body()):
+def create_student(student: Student):
 
     data = load_data()
     student_id = student["id"]

@@ -1,0 +1,4 @@
+pydantic data validation:
+    1. pydantic class
+    2. input ---> object
+    3. DataBase save
