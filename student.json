@@ -128,5 +128,15 @@
     "English_marks": 82,
     "Science_marks": 77,
     "Phone": 1700000120
+  },
+  "S013": {
+    "name": "string",
+    "age": 12,
+    "Student_class": 1,
+    "roll": 1,
+    "Math_marks": 1,
+    "English_marks": 1,
+    "Science_marks": 1,
+    "Phone": 1700000000
   }
 }

@@ -2,6 +2,7 @@ from fastapi import FastAPI, Path, HTTPException, Query, Body
 from pydantic import BaseModel, Field
 from typing import Annotated
 import json
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
@@ -74,8 +75,11 @@ def create_student(student: Student):
 
     data = load_data()
 
+    if student.id in data:
+        raise HTTPException(status_code=400, detail="Student Id Already Exisit")
+
     data[student.id] = student.model_dump(exclude=["id"])
 
     save_data(data)
 
-    return "Successfully student created"
+    return JSONResponse(status_code= 201, content={'message': 'Student Created Successfully'})
