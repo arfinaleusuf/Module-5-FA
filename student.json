@@ -20,7 +20,7 @@
     "phone": "01710000002"
   },
   "S003": {
-    "name": "Tanvir Hasan",
+    "name": "Tanvir Hassan",
     "age": 16,
     "Student_class": 10,
     "roll": 3,
@@ -99,26 +99,6 @@
     "Science_marks": 90,
     "phone": "01710000010"
   },
-  "S016": {
-    "name": "arfin",
-    "age": 15,
-    "Student_class": 9,
-    "roll": 6,
-    "Math_marks": 88,
-    "English_marks": 80,
-    "Science_marks": 92,
-    "phone": "01710000006"
-  },
-  "S012": {
-    "name": "arfin",
-    "age": 15,
-    "Student_class": 9,
-    "roll": 6,
-    "Math_marks": 88,
-    "English_marks": 80,
-    "Science_ marks": 92,
-    "phone": "01710000006"
-  },
   "S0012": {
     "name": "rakib",
     "age": 12,
@@ -138,5 +118,15 @@
     "English_marks": 1,
     "Science_marks": 1,
     "Phone": 1700000000
+  },
+  "S011": {
+    "name": "Shakib",
+    "age": 11,
+    "Student_class": 7,
+    "roll": 1,
+    "Math_marks": 98,
+    "English_marks": 82,
+    "Science_marks": 90,
+    "Phone": "01700000011"
   }
 }

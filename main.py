@@ -15,7 +15,7 @@ class Student(BaseModel):
     Math_marks: Annotated[int, Field(...,gt=0, lt=101)]
     English_marks: Annotated[int, Field(...,gt=0, lt=101)]
     Science_marks: Annotated[int, Field(...,gt=0, lt=101)]
-    Phone: Annotated[int, Field(...,example="01700000000")]
+    Phone: Annotated[str, Field(...,example="01700000000")]
 
 class StudentUpdate(BaseModel):
     name : Annotated[Optional[str],Field(default=None)]
@@ -102,6 +102,8 @@ def update_student(student_id: str, student: StudentUpdate):
     if student_id not in data:
         raise HTTPException(status_code=404, detail="Student Not Found")
 
-    data[student.id].update(student.model_dump(exclude_unset=True))
-    
-    return JSONResponse(status_code=201, content={'message': 'Student Updated Successfully'})
+    data[student_id].update(student.model_dump(exclude_unset=True))
+
+    save_data(data)
+
+    return JSONResponse(status_code=200, content={'message': 'Student Updated Successfully'})
