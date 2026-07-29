@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Path, HTTPException, Query, Body
 from pydantic import BaseModel, Field
-from typing import Annotated
+from typing import Annotated,Optional
 import json
 from fastapi.responses import JSONResponse
 
@@ -8,7 +8,7 @@ app = FastAPI()
 
 class Student(BaseModel):
     id : Annotated[str,Field(...,description="Student id of the student", example="S001")]
-    name : str
+    name : Annotated[str,Field(...,description="Student Name")]
     age : Annotated[int, Field(...,gt=0, lt=100 ,description="Student age of the student", example="12")]
     Student_class : Annotated[int, Field(...,gt=0, lt=13)]
     roll: Annotated[int, Field(...,gt=0, lt=101)]
@@ -16,6 +16,17 @@ class Student(BaseModel):
     English_marks: Annotated[int, Field(...,gt=0, lt=101)]
     Science_marks: Annotated[int, Field(...,gt=0, lt=101)]
     Phone: Annotated[int, Field(...,example="01700000000")]
+
+class StudentUpdate(BaseModel):
+    name : Annotated[Optional[str],Field(default=None)]
+    age : Annotated[Optional[int],Field(default=None)]
+    Student_class : Annotated[Optional[int],Field(default=None)]
+    roll: Annotated[Optional[int],Field(default=None)]
+    Math_marks: Annotated[Optional[int],Field(default=None)]
+    English_marks: Annotated[Optional[int],Field(default=None)]
+    Science_marks: Annotated[Optional[int],Field(default=None)]
+    Phone: Annotated[Optional[int],Field(default=None)]
+
 
 @app.get("/")
 def hello():
@@ -83,3 +94,14 @@ def create_student(student: Student):
     save_data(data)
 
     return JSONResponse(status_code= 201, content={'message': 'Student Created Successfully'})
+
+@app.put("/edit/{student_id}")
+def update_student(student_id: str, student: StudentUpdate):
+    data = load_data()
+
+    if student_id not in data:
+        raise HTTPException(status_code=404, detail="Student Not Found")
+
+    data[student.id].update(student.model_dump(exclude_unset=True))
+    
+    return JSONResponse(status_code=201, content={'message': 'Student Updated Successfully'})
